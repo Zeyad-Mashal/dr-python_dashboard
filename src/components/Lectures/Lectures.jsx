@@ -1,107 +1,139 @@
 import React, { useState } from "react";
 import "./Lectures.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+import { faX, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+
 const Lectures = () => {
-  const [videoUrls, setVideoUrls] = useState([]);
-  const [pdfUrls, setPdfUrls] = useState([]);
-  const [videoInput, setVideoInput] = useState("");
-  const [pdfInput, setPdfInput] = useState("");
+  const [subtitles, setSubtitles] = useState([{ title: "", videos: [] }]);
 
-  const addVideoUrl = () => {
-    if (videoInput) {
-      setVideoUrls([...videoUrls, videoInput]);
-      setVideoInput(""); // Clear the input after adding
-    }
+  const handleSubtitleChange = (index, title) => {
+    const updatedSubtitles = subtitles.map((subtitle, i) =>
+      i === index ? { ...subtitle, title } : subtitle
+    );
+    setSubtitles(updatedSubtitles);
   };
 
-  const addPdfUrl = () => {
-    if (pdfInput) {
-      setPdfUrls([...pdfUrls, pdfInput]);
-      setPdfInput(""); // Clear the input after adding
-    }
+  const handleVideoInputChange = (index, videoInput) => {
+    const updatedSubtitles = subtitles.map((subtitle, i) =>
+      i === index ? { ...subtitle, videoInput } : subtitle
+    );
+    setSubtitles(updatedSubtitles);
   };
 
-  const removeVideoUrl = (indexToRemove) => {
-    setVideoUrls(videoUrls.filter((_, index) => index !== indexToRemove));
+  const addVideoToSubtitle = (index) => {
+    const updatedSubtitles = subtitles.map((subtitle, i) => {
+      if (i === index && subtitle.videoInput) {
+        return {
+          ...subtitle,
+          videos: [...subtitle.videos, subtitle.videoInput],
+          videoInput: "",
+        };
+      }
+      return subtitle;
+    });
+    setSubtitles(updatedSubtitles);
   };
 
-  const removePdfUrl = (indexToRemove) => {
-    setPdfUrls(pdfUrls.filter((_, index) => index !== indexToRemove));
+  const addSubtitle = () => {
+    setSubtitles([...subtitles, { title: "", videos: [] }]);
   };
+
+  const removeVideo = (subtitleIndex, videoIndex) => {
+    const updatedSubtitles = subtitles.map((subtitle, i) => {
+      if (i === subtitleIndex) {
+        return {
+          ...subtitle,
+          videos: subtitle.videos.filter((_, index) => index !== videoIndex),
+        };
+      }
+      return subtitle;
+    });
+    setSubtitles(updatedSubtitles);
+  };
+
+  // Function to remove the entire subtitle and its videos
+  const removeSubtitle = (index) => {
+    setSubtitles(subtitles.filter((_, i) => i !== index));
+  };
+
   const openAddlec = () => {
     document.querySelector(".add_lecture").style.display = "flex";
   };
+
   const closeAddlec = () => {
     document.querySelector(".add_lecture").style.display = "none";
   };
+
   return (
     <section className="lectures">
       <div className="lectures_container">
         <button onClick={openAddlec}>Add Lecture</button>
         <div className="add_lecture">
           <FontAwesomeIcon icon={faX} onClick={closeAddlec} />
-
           <input type="text" placeholder="Lecture Title" />
-          <div className="url_container">
-            <div className="video_url">
+          {subtitles.map((subtitle, index) => (
+            <div key={index} className="subtitle_section">
+              <input
+                type="text"
+                placeholder={`Subtitle ${index + 1}`}
+                value={subtitle.title}
+                onChange={(e) => handleSubtitleChange(index, e.target.value)}
+              />
               <div className="video_url_input">
+                <button
+                  className="remove_btn"
+                  onClick={() => removeSubtitle(index)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
                 <input
                   type="text"
                   placeholder="Video URL"
-                  value={videoInput}
-                  onChange={(e) => setVideoInput(e.target.value)}
+                  value={subtitle.videoInput || ""}
+                  onChange={(e) =>
+                    handleVideoInputChange(index, e.target.value)
+                  }
                 />
-                <button onClick={addVideoUrl}>+</button>
+                <button onClick={() => addVideoToSubtitle(index)}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
               </div>
               <div className="video_container">
-                {videoUrls.map((url, index) => (
-                  <div key={index}>
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {url}
+                {subtitle.videos.map((video, videoIndex) => (
+                  <div key={videoIndex}>
+                    <a href={video} target="_blank" rel="noopener noreferrer">
+                      {video}
                     </a>
-                    <button onClick={() => removeVideoUrl(index)}>X</button>
+                    <button onClick={() => removeVideo(index, videoIndex)}>
+                      X
+                    </button>
                   </div>
                 ))}
               </div>
+
+              {/* Remove Subtitle Button */}
+              <div className="remove_subtitle"></div>
+
+              {/* Show the + button only for the last subtitle to add the next one */}
+              {index === subtitles.length - 1 && (
+                <button className="add_subtitle" onClick={addSubtitle}>
+                  اضف قسم أخر
+                </button>
+              )}
             </div>
-            <div className="pdf_url">
-              <div className="pdf_url_input">
-                <input
-                  type="text"
-                  placeholder="PDF URL"
-                  value={pdfInput}
-                  onChange={(e) => setPdfInput(e.target.value)}
-                />
-                <button onClick={addPdfUrl}>+</button>
-              </div>
-              <div className="pdf_container">
-                {pdfUrls.map((url, index) => (
-                  <div key={index}>
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {url}
-                    </a>
-                    <button onClick={() => removePdfUrl(index)}>X</button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <button className="add_btn">إضافة</button>
+          ))}
         </div>
         <div className="lectures_list">
           <div className="lectures_item">
             <h3>Lecture 1</h3>
           </div>
           <div className="lectures_item">
-            <h3>Lecture 1</h3>
-          </div>
-          <div className="lectures_item">
-            <h3>Lecture 1</h3>
+            <h3>Lecture 2</h3>
           </div>
         </div>
       </div>
     </section>
   );
 };
+
 export default Lectures;

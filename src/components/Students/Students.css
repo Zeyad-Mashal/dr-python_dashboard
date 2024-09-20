@@ -44,30 +44,26 @@
   align-items: center;
   flex-direction: column;
 }
-.adllStudents_list {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+.allStudents table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+  margin: 1rem 0;
 }
-.allStudents_item {
-  width: 300px;
-  border: 2px solid #aaa;
-  box-shadow: 0px 0px 10px #ccc;
-  margin-top: 1rem;
-  border-radius: 10px;
-  padding: 10px 1rem;
+tr {
   cursor: pointer;
 }
-.allStudents_item p:last-child {
-  text-decoration: underline;
-  color: blue;
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
 }
-.allStudents_item p:first-child {
-  font-weight: bold;
+
+tr:nth-child(odd) {
+  background-color: #dddddd;
 }
+
 .student_details {
   width: 50%;
   background-color: #fff;
