@@ -22,7 +22,7 @@ const Students = () => {
       <div className="students_container">
         <div className="search_input">
           <input type="text" placeholder="بحث بأسم و رقم الطالب" />
-          <button onClick={() => setAddSubject(true)}>إضافة طالب</button>
+          {/* <button onClick={() => setAddSubject(true)}>إضافة طالب</button> */}
         </div>
         {openDetails ? (
           <div className="student_details">
@@ -53,47 +53,47 @@ const Students = () => {
           ""
         )}
 
-        {addSubject ? (
-          <div className="addStudents">
-            <FontAwesomeIcon icon={faX} onClick={() => setAddSubject(false)} />
-            <h3>أضافة طالب</h3>
-            <div className="addStudent_list">
-              <div className="inputs_top">
-                <input type="text" placeholder="userName" />
-                <input type="text" placeholder="Phone" />
-              </div>
-              <div className="inputs_bottom">
-                <input type="text" placeholder="Email" />
-                <input type="text" placeholder="Password" />
-              </div>
-              <div className="addSubjects_array">
-                <select
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                >
-                  <option value="">Select a subject</option>
-                  <option value="programming">Programming</option>
-                  <option value="mathematics">Mathematics</option>
-                  <option value="science">Science</option>
-                </select>
-                <button onClick={handleAddSubject}>+</button>
-              </div>
-              <div className="array_container">
-                {subjects.map((subject, index) => (
-                  <>
-                    <p key={index}>{subject}</p>
-                    <button onClick={() => handleRemoveSubject(subject)}>
-                      X
-                    </button>
-                  </>
-                ))}
-              </div>
+        {/* {addSubject ? ( */}
+        <div className="addStudents">
+          <FontAwesomeIcon icon={faX} onClick={() => setAddSubject(false)} />
+          <h3>أضافة طالب</h3>
+          <div className="addStudent_list">
+            <div className="inputs_top">
+              <input type="text" placeholder="userName" />
+              <input type="text" placeholder="Phone" />
             </div>
-            <button>إضافة</button>
+            <div className="inputs_bottom">
+              <input type="text" placeholder="Email" />
+              <input type="text" placeholder="Password" />
+            </div>
+            <div className="addSubjects_array">
+              <select
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+              >
+                <option value="">Select a subject</option>
+                <option value="programming">Programming</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="science">Science</option>
+              </select>
+              <button onClick={handleAddSubject}>+</button>
+            </div>
+            <div className="array_container">
+              {subjects.map((subject, index) => (
+                <>
+                  <p key={index}>{subject}</p>
+                  <button onClick={() => handleRemoveSubject(subject)}>
+                    X
+                  </button>
+                </>
+              ))}
+            </div>
           </div>
-        ) : (
+          <button>إضافة</button>
+        </div>
+        {/* ) : (
           ""
-        )}
+        )} */}
 
         {updateSubject ? (
           <div className="addStudents">

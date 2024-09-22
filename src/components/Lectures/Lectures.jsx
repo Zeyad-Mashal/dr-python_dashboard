@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./Lectures.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import { useParams } from "react-router-dom";
 const Lectures = () => {
+  const { subjectId } = useParams();
   const [subtitles, setSubtitles] = useState([{ title: "", videos: [] }]);
 
   const handleSubtitleChange = (index, title) => {
@@ -63,11 +64,26 @@ const Lectures = () => {
   const closeAddlec = () => {
     document.querySelector(".add_lecture").style.display = "none";
   };
+  const openUpdatelec = () => {
+    document.querySelector(".update_lecture").style.display = "flex";
+  };
+
+  const closeUpdatelec = () => {
+    document.querySelector(".update_lecture").style.display = "none";
+  };
+  const openDeletelec = () => {
+    document.querySelector(".delete_lecture").style.display = "flex";
+  };
+
+  const closeDeletelec = () => {
+    document.querySelector(".delete_lecture").style.display = "none";
+  };
 
   return (
     <section className="lectures">
       <div className="lectures_container">
         <button onClick={openAddlec}>Add Lecture</button>
+        {/* add lecture */}
         <div className="add_lecture">
           <FontAwesomeIcon icon={faX} onClick={closeAddlec} />
           <input type="text" placeholder="Lecture Title" />
@@ -123,12 +139,80 @@ const Lectures = () => {
             </div>
           ))}
         </div>
+        {/* update lecture */}
+        <div className="add_lecture update_lecture">
+          <FontAwesomeIcon icon={faX} onClick={closeUpdatelec} />
+          <input type="text" placeholder="Lecture Title" />
+          {subtitles.map((subtitle, index) => (
+            <div key={index} className="subtitle_section">
+              <input
+                type="text"
+                placeholder={`Subtitle ${index + 1}`}
+                value={subtitle.title}
+                onChange={(e) => handleSubtitleChange(index, e.target.value)}
+              />
+              <div className="video_url_input">
+                <button
+                  className="remove_btn"
+                  onClick={() => removeSubtitle(index)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+                <input
+                  type="text"
+                  placeholder="Video URL"
+                  value={subtitle.videoInput || ""}
+                  onChange={(e) =>
+                    handleVideoInputChange(index, e.target.value)
+                  }
+                />
+                <button onClick={() => addVideoToSubtitle(index)}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
+              </div>
+              <div className="video_container">
+                {subtitle.videos.map((video, videoIndex) => (
+                  <div key={videoIndex}>
+                    <a href={video} target="_blank" rel="noopener noreferrer">
+                      {video}
+                    </a>
+                    <button onClick={() => removeVideo(index, videoIndex)}>
+                      X
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Remove Subtitle Button */}
+              <div className="remove_subtitle"></div>
+
+              {/* Show the + button only for the last subtitle to add the next one */}
+              {index === subtitles.length - 1 && (
+                <button className="add_subtitle" onClick={addSubtitle}>
+                  اضف قسم أخر
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+        {/* delete lecture */}
+        <div className="delete_lecture">
+          <h3>Delete Lecture Name ?</h3>
+          <div className="delete_lecture_btn">
+            <button>Delete</button>
+            <button onClick={closeDeletelec}>Close</button>
+          </div>
+        </div>
         <div className="lectures_list">
           <div className="lectures_item">
+            <button onClick={openUpdatelec}>update</button>
             <h3>Lecture 1</h3>
+            <button onClick={openDeletelec}>delete</button>
           </div>
           <div className="lectures_item">
+            <button onClick={openUpdatelec}>update</button>
             <h3>Lecture 2</h3>
+            <button onClick={openDeletelec}>delete</button>
           </div>
         </div>
       </div>

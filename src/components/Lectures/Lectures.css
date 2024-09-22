@@ -35,12 +35,29 @@
   border-radius: 16px;
   box-shadow: 4px 4px 10px #ccc;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 .lectures_item > h3 {
   font-size: 1.3rem;
   font-weight: bold;
 }
-.add_lecture {
+.lectures_item button {
+  border: 2px solid #aaa;
+  width: 100px;
+  outline: none;
+  border-radius: 10px;
+  padding: 5px 0;
+  transition: 0.3s ease;
+}
+.lectures_item button:hover {
+  border: 2px solid #222;
+  font-weight: bold;
+}
+.add_lecture,
+.delete_lecture {
   width: 80%;
   max-height: 90vh;
   background-color: #fff;
@@ -55,6 +72,28 @@
   gap: 1rem;
   position: relative;
   overflow: auto;
+}
+.delete_lecture {
+  width: 50%;
+  position: absolute;
+  top: 30%;
+}
+.delete_lecture_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.delete_lecture_btn button {
+  border: 2px solid #aaa;
+  padding: 10px;
+  width: 100px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+.delete_lecture_btn button:hover {
+  border: 2px solid #222;
+  font-weight: bold;
 }
 .add_lecture > svg {
   position: absolute;

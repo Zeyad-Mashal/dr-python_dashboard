@@ -148,8 +148,7 @@ tr:nth-child(odd) {
   box-shadow: 0 0 10px #ccc;
   border-radius: 10px;
   padding: 1rem;
-  position: fixed;
-  top: 20%;
+  margin-top: 1rem;
 }
 .addStudent_list {
   width: 100%;
@@ -239,4 +238,13 @@ tr:nth-child(odd) {
   font-weight: bold;
   font-size: 1.3rem;
   cursor: pointer;
+}
+@media screen and (max-width: 589px) {
+  .addStudents {
+    width: 95%;
+  }
+  .inputs_top,
+  .inputs_bottom {
+    flex-direction: column;
+  }
 }
