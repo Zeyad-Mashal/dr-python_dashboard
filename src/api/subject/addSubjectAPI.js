@@ -1,4 +1,4 @@
-const URL = "http://back.dr-python.center/subject/add";
+const URL = "https://back.dr-python.center/subject/add";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const AddSubjectAPI = async (data, setError, setLoading, setAllSubjects) => {
     setLoading(true)

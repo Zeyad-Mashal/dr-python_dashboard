@@ -1,9 +1,9 @@
-const URL = "https://back.dr-python.center/subject/remove/";
+const URL = "https://back.dr-python.center/lecture/remove/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
-const DeleteSubjectAPI = async (setError, setLoading, setAllSubjects, subjectId) => {
+const deleteLectureAPI = async (setError, setLoading, setAllLectures, subjectId, lectureId) => {
     setLoading(true)
     try {
-        const response = await fetch(`${URL}${subjectId}`, {
+        const response = await fetch(`${URL}${lectureId}/${subjectId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -12,14 +12,13 @@ const DeleteSubjectAPI = async (setError, setLoading, setAllSubjects, subjectId)
         });
 
         const result = await response.json();
-        console.log(result);
 
         if (response.ok) {
-            setAllSubjects(result.allSubjects)
+            setAllLectures(result.lectures)
             setLoading(false)
-            document.querySelector(".delete_subject").style.display = "none";
+            document.querySelector(".delete_lecture").style.display = "none";
         } else {
-            if (response.status == 400) {
+            if (response.status == 404) {
                 setError(result.message);
                 setLoading(false)
             } else {
@@ -33,4 +32,4 @@ const DeleteSubjectAPI = async (setError, setLoading, setAllSubjects, subjectId)
 
     }
 }
-export default DeleteSubjectAPI;
+export default deleteLectureAPI;

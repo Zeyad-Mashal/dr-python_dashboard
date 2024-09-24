@@ -1,82 +1,139 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Lectures.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
+import AddLectureAPI from "../../api/lectures/AddLectureAPI";
+import GetSubjectAPI from "../../api/lectures/GetAllLecturesAPI";
+import UpdateLectureAPI from "../../api/lectures/UpdateLectureAPI";
+import deleteLectureAPI from "../../api/lectures/deleteLectureAPI";
 const Lectures = () => {
+  useEffect(() => {
+    getAllLecturesApi();
+  }, []);
   const { subjectId } = useParams();
-  const [subtitles, setSubtitles] = useState([{ title: "", videos: [] }]);
-
-  const handleSubtitleChange = (index, title) => {
-    const updatedSubtitles = subtitles.map((subtitle, i) =>
-      i === index ? { ...subtitle, title } : subtitle
+  const [subnames, setSubnames] = useState([{ name: "", videoUrl: [] }]);
+  const [allLectures, setAllLectures] = useState([]);
+  const [lectureName, setLectureName] = useState("");
+  const [pdfFile, setPdfFile] = useState(["link1", "Link2"]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [lectureId, setLectureId] = useState("");
+  const handleSubnameChange = (index, name) => {
+    const updatedSubnames = subnames.map((subname, i) =>
+      i === index ? { ...subname, name } : subname
     );
-    setSubtitles(updatedSubtitles);
+    setSubnames(updatedSubnames);
   };
 
   const handleVideoInputChange = (index, videoInput) => {
-    const updatedSubtitles = subtitles.map((subtitle, i) =>
-      i === index ? { ...subtitle, videoInput } : subtitle
+    const updatedSubnames = subnames.map((subname, i) =>
+      i === index ? { ...subname, videoInput } : subname
     );
-    setSubtitles(updatedSubtitles);
+    setSubnames(updatedSubnames);
   };
 
-  const addVideoToSubtitle = (index) => {
-    const updatedSubtitles = subtitles.map((subtitle, i) => {
-      if (i === index && subtitle.videoInput) {
+  const addVideoToSubname = (index) => {
+    const updatedSubnames = subnames.map((subname, i) => {
+      if (i === index && subname.videoInput) {
         return {
-          ...subtitle,
-          videos: [...subtitle.videos, subtitle.videoInput],
+          ...subname,
+          videoUrl: [...subname.videoUrl, subname.videoInput],
           videoInput: "",
         };
       }
-      return subtitle;
+      return subname;
     });
-    setSubtitles(updatedSubtitles);
+    setSubnames(updatedSubnames);
   };
 
-  const addSubtitle = () => {
-    setSubtitles([...subtitles, { title: "", videos: [] }]);
+  const addSubname = () => {
+    setSubnames([...subnames, { name: "", videoUrl: [] }]);
   };
 
-  const removeVideo = (subtitleIndex, videoIndex) => {
-    const updatedSubtitles = subtitles.map((subtitle, i) => {
-      if (i === subtitleIndex) {
+  const removeVideo = (subnameIndex, videoIndex) => {
+    const updatedSubnames = subnames.map((subname, i) => {
+      if (i === subnameIndex) {
         return {
-          ...subtitle,
-          videos: subtitle.videos.filter((_, index) => index !== videoIndex),
+          ...subname,
+          videoUrl: subname.videoUrl.filter((_, index) => index !== videoIndex),
         };
       }
-      return subtitle;
+      return subname;
     });
-    setSubtitles(updatedSubtitles);
+    setSubnames(updatedSubnames);
   };
 
-  // Function to remove the entire subtitle and its videos
-  const removeSubtitle = (index) => {
-    setSubtitles(subtitles.filter((_, i) => i !== index));
+  // Function to remove the entire subname and its videoUrl
+  const removeSubname = (index) => {
+    setSubnames(subnames.filter((_, i) => i !== index));
   };
 
   const openAddlec = () => {
+    setLectureName("");
+    setSubnames([{ name: "", videoUrl: [] }]);
+    setPdfFile([]);
+    setError("");
     document.querySelector(".add_lecture").style.display = "flex";
   };
 
   const closeAddlec = () => {
     document.querySelector(".add_lecture").style.display = "none";
   };
-  const openUpdatelec = () => {
+  const openUpdatelec = (lectureId, lectureName, subnames, pdfFile) => {
+    setLectureId(lectureId);
+    setLectureName(lectureName);
+    setSubnames(subnames);
+    setPdfFile(pdfFile);
     document.querySelector(".update_lecture").style.display = "flex";
   };
 
   const closeUpdatelec = () => {
     document.querySelector(".update_lecture").style.display = "none";
   };
-  const openDeletelec = () => {
+  const openDeletelec = (lectureId) => {
+    setLectureId(lectureId);
     document.querySelector(".delete_lecture").style.display = "flex";
   };
 
   const closeDeletelec = () => {
     document.querySelector(".delete_lecture").style.display = "none";
+  };
+
+  const addLectureApi = () => {
+    const data = {
+      name: lectureName,
+      parts: subnames,
+      pdfFile,
+    };
+    AddLectureAPI(data, setError, setLoading, setAllLectures, subjectId);
+  };
+  const getAllLecturesApi = () => {
+    GetSubjectAPI(setError, setLoading, setAllLectures, subjectId);
+  };
+  const UpdateLectureApi = () => {
+    const data = {
+      name: lectureName,
+      parts: subnames,
+      pdfFile,
+    };
+    UpdateLectureAPI(
+      data,
+      setError,
+      setLoading,
+      setAllLectures,
+      subjectId,
+      lectureId
+    );
+  };
+  const deleteLectureApi = () => {
+    deleteLectureAPI(
+      setError,
+      setLoading,
+      setAllLectures,
+      subjectId,
+      lectureId
+    );
   };
 
   return (
@@ -86,36 +143,41 @@ const Lectures = () => {
         {/* add lecture */}
         <div className="add_lecture">
           <FontAwesomeIcon icon={faX} onClick={closeAddlec} />
-          <input type="text" placeholder="Lecture Title" />
-          {subtitles.map((subtitle, index) => (
-            <div key={index} className="subtitle_section">
+          <input
+            type="text"
+            placeholder="Lecture name"
+            value={lectureName}
+            onChange={(e) => setLectureName(e.target.value)}
+          />
+          {subnames.map((subname, index) => (
+            <div key={index} className="subname_section">
               <input
                 type="text"
-                placeholder={`Subtitle ${index + 1}`}
-                value={subtitle.title}
-                onChange={(e) => handleSubtitleChange(index, e.target.value)}
+                placeholder={`Subname ${index + 1}`}
+                value={subname.name}
+                onChange={(e) => handleSubnameChange(index, e.target.value)}
               />
               <div className="video_url_input">
                 <button
                   className="remove_btn"
-                  onClick={() => removeSubtitle(index)}
+                  onClick={() => removeSubname(index)}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
                 <input
                   type="text"
                   placeholder="Video URL"
-                  value={subtitle.videoInput || ""}
+                  value={subname.videoInput || ""}
                   onChange={(e) =>
                     handleVideoInputChange(index, e.target.value)
                   }
                 />
-                <button onClick={() => addVideoToSubtitle(index)}>
+                <button onClick={() => addVideoToSubname(index)}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               </div>
               <div className="video_container">
-                {subtitle.videos.map((video, videoIndex) => (
+                {subname.videoUrl.map((video, videoIndex) => (
                   <div key={videoIndex}>
                     <a href={video} target="_blank" rel="noopener noreferrer">
                       {video}
@@ -127,51 +189,60 @@ const Lectures = () => {
                 ))}
               </div>
 
-              {/* Remove Subtitle Button */}
-              <div className="remove_subtitle"></div>
+              {/* Remove Subname Button */}
+              <div className="remove_subname"></div>
 
-              {/* Show the + button only for the last subtitle to add the next one */}
-              {index === subtitles.length - 1 && (
-                <button className="add_subtitle" onClick={addSubtitle}>
+              {/* Show the + button only for the last subname to add the next one */}
+              {index === subnames.length - 1 && (
+                <button className="add_subname" onClick={addSubname}>
                   اضف قسم أخر
                 </button>
               )}
             </div>
           ))}
+          {error}
+          <button onClick={addLectureApi}>
+            {loading ? "loading..." : "Add Lecture"}
+          </button>
         </div>
         {/* update lecture */}
         <div className="add_lecture update_lecture">
           <FontAwesomeIcon icon={faX} onClick={closeUpdatelec} />
-          <input type="text" placeholder="Lecture Title" />
-          {subtitles.map((subtitle, index) => (
-            <div key={index} className="subtitle_section">
+          <input
+            type="text"
+            placeholder="Lecture name"
+            value={lectureName}
+            onChange={(e) => setLectureName(e.target.value)}
+          />
+          {subnames.map((subname, index) => (
+            <div key={index} className="subname_section">
               <input
                 type="text"
-                placeholder={`Subtitle ${index + 1}`}
-                value={subtitle.title}
-                onChange={(e) => handleSubtitleChange(index, e.target.value)}
+                placeholder={`Subname ${index + 1}`}
+                value={subname.name}
+                onChange={(e) => handleSubnameChange(index, e.target.value)}
               />
               <div className="video_url_input">
                 <button
                   className="remove_btn"
-                  onClick={() => removeSubtitle(index)}
+                  onClick={() => removeSubname(index)}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
                 <input
                   type="text"
                   placeholder="Video URL"
-                  value={subtitle.videoInput || ""}
+                  value={subname.videoInput || ""}
                   onChange={(e) =>
                     handleVideoInputChange(index, e.target.value)
                   }
                 />
-                <button onClick={() => addVideoToSubtitle(index)}>
+                <button onClick={() => addVideoToSubname(index)}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               </div>
               <div className="video_container">
-                {subtitle.videos.map((video, videoIndex) => (
+                {subname.videoUrl.map((video, videoIndex) => (
                   <div key={videoIndex}>
                     <a href={video} target="_blank" rel="noopener noreferrer">
                       {video}
@@ -183,37 +254,58 @@ const Lectures = () => {
                 ))}
               </div>
 
-              {/* Remove Subtitle Button */}
-              <div className="remove_subtitle"></div>
+              {/* Remove Subname Button */}
+              <div className="remove_subname"></div>
 
-              {/* Show the + button only for the last subtitle to add the next one */}
-              {index === subtitles.length - 1 && (
-                <button className="add_subtitle" onClick={addSubtitle}>
+              {/* Show the + button only for the last subname to add the next one */}
+              {index === subnames.length - 1 && (
+                <button className="add_subname" onClick={addSubname}>
                   اضف قسم أخر
                 </button>
               )}
             </div>
           ))}
+          {error}
+          <button onClick={UpdateLectureApi}>
+            {loading ? "Loading..." : "Update"}
+          </button>
         </div>
         {/* delete lecture */}
         <div className="delete_lecture">
           <h3>Delete Lecture Name ?</h3>
           <div className="delete_lecture_btn">
-            <button>Delete</button>
+            {error}
+            <button onClick={deleteLectureApi}>
+              {loading ? "Loading..." : "Delete"}
+            </button>
             <button onClick={closeDeletelec}>Close</button>
           </div>
         </div>
         <div className="lectures_list">
-          <div className="lectures_item">
-            <button onClick={openUpdatelec}>update</button>
-            <h3>Lecture 1</h3>
-            <button onClick={openDeletelec}>delete</button>
-          </div>
-          <div className="lectures_item">
-            <button onClick={openUpdatelec}>update</button>
-            <h3>Lecture 2</h3>
-            <button onClick={openDeletelec}>delete</button>
-          </div>
+          {loading
+            ? "Loading..,"
+            : allLectures.map((item) => {
+                return (
+                  <div className="lectures_item">
+                    <button
+                      onClick={() =>
+                        openUpdatelec(
+                          item._id,
+                          item.name,
+                          item.parts,
+                          item.pdfFile
+                        )
+                      }
+                    >
+                      update
+                    </button>
+                    <h3>{item.name}</h3>
+                    <button onClick={() => openDeletelec(item._id)}>
+                      delete
+                    </button>
+                  </div>
+                );
+              })}
         </div>
       </div>
     </section>

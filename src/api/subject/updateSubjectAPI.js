@@ -1,4 +1,4 @@
-const URL = "http://back.dr-python.center/subject/update/";
+const URL = "https://back.dr-python.center/subject/update/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const UpdateSubjectAPI = async (data, setError, setLoading, setAllSubjects, subjectId) => {
     setLoading(true)

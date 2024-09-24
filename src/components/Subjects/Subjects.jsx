@@ -146,24 +146,24 @@ const Subjects = () => {
             ? "..."
             : allSubjects?.map((item) => {
                 return (
-                  <Link to={`/lectures/${item._id}`}>
-                    <div className="subjects_item" key={item._id}>
+                  <div className="subjects_item" key={item._id}>
+                    <Link to={`/lectures/${item._id}`}>
                       <h3>{item.name}</h3>
                       <img src={item.image} />
-                      <div className="subject_btn">
-                        <button
-                          onClick={() =>
-                            openUpdateSubject(item._id, item.name, item.image)
-                          }
-                        >
-                          Update
-                        </button>
-                        <button onClick={() => openDeleteSubject(item._id)}>
-                          Delete
-                        </button>
-                      </div>
+                    </Link>
+                    <div className="subject_btn">
+                      <button
+                        onClick={() =>
+                          openUpdateSubject(item._id, item.name, item.image)
+                        }
+                      >
+                        Update
+                      </button>
+                      <button onClick={() => openDeleteSubject(item._id)}>
+                        Delete
+                      </button>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
         </div>
