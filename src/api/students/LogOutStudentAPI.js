@@ -1,10 +1,10 @@
-const URL = "https://back.dr-python.center/subject/get";
+const URL = "https://back.dr-python.center/student/logout/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
-const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
-    setGetLoading(true)
+const LogOutStudentAPI = async (setError, setLoading, setAllStudents, studentId, currentPage) => {
+    setLoading(true)
     try {
-        const response = await fetch(URL, {
-            method: 'GET',
+        const response = await fetch(`${URL}${studentId}/${currentPage}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 "authorization": `drpz0${USER_TOKEN}`
@@ -14,21 +14,22 @@ const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
         const result = await response.json();
 
         if (response.ok) {
-            setAllSubjects(result.subjects)
-            setGetLoading(false)
+            setAllStudents(result.students)
+            setLoading(false)
+            document.querySelector(".logoutStudent").style.display = "none";
         } else {
             if (response.status == 500) {
                 setError(result.message);
-                setGetLoading(false)
+                setLoading(false)
             } else {
                 setError(response.message);
-                setGetLoading(false)
+                setLoading(false)
             }
         }
     } catch (error) {
         setError('An error occurred');
-        setGetLoading(false)
+        setLoading(false)
 
     }
 }
-export default GetSubjectAPI;
+export default LogOutStudentAPI;

@@ -132,13 +132,17 @@
   padding: 1rem;
 }
 .pdf_url,
-.video_url {
+.video_url,
+.pdf_section {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
+}
+.pdfFiles_container {
+  width: 100%;
 }
 .url_container button {
   padding: 0.5rem;
@@ -161,7 +165,8 @@
   align-items: center;
 }
 .video_url_input button,
-.video_url_input .remove_btn {
+.video_url_input .remove_btn,
+.pdfFiles_container > button {
   width: 60px;
   height: 60px;
   font-size: 1rem;
@@ -170,7 +175,8 @@
   font-weight: bold;
   transition: 0.3s ease;
 }
-.video_url_input button:hover {
+.video_url_input button:hover,
+.pdfFiles_container > button:hover {
   background-color: black;
   color: white;
 }
@@ -188,7 +194,8 @@
   word-wrap: break-word;
 }
 .video_container button,
-.pdf_container button {
+.pdf_container button,
+.pdfFiles_array button {
   width: 40px;
   height: 40px;
   font-size: 1rem;
@@ -206,7 +213,15 @@
 .add_lecture .add_btn {
   background-color: black;
   color: #fff;
-  border: 2px solid #333;
+  border: 2px solid #fff;
+  padding: 10px;
+  width: 150px;
+  transition: 0.3s ease;
+}
+.add_lecture .add_btn:hover {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
 }
 @media screen and (max-width: 789px) {
   .lectures_item {

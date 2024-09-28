@@ -13,10 +13,10 @@ function App() {
       {isAuth ? <Navbar /> : null}
       <Routes>
         <Route path="/" element={isAuth ? <Navigate to='/subjects' /> : <Login />} />
-        <Route path="/subjects" element={<Subjects />} />
-        <Route path="/lectures/:subjectId" element={<Lectures />} />
-        <Route path="/students" element={<Students />} />
-        <Route path="/coordinator" element={<Coordinator />} />
+        <Route path="/subjects" element={isAuth ? <Subjects /> : <Navigate to='/' />} />
+        <Route path="/lectures/:subjectId" element={isAuth ? <Lectures /> : <Navigate to='/' />} />
+        <Route path="/students" element={isAuth ? <Students /> : <Navigate to='/' />} />
+        <Route path="/coordinator" element={isAuth ? <Coordinator /> : <Navigate to='/' />} />
       </Routes>
     </div>
   );

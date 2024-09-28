@@ -1,0 +1,4 @@
+.activeBlock {
+  color: green;
+  transform: scale(1.3);
+}

@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import LogoutAPi from "../../api/Auth/LogoutAPi";
 const Navbar = () => {
+  const [error, setError] = useState("");
+  const LogOut = () => {
+    const data = {
+      token: localStorage.getItem("USER_TOKEN"),
+    };
+    LogoutAPi(data, setError);
+  };
   return (
     <nav class="navbar navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
@@ -47,6 +55,9 @@ const Navbar = () => {
               </li>
               <li class="nav-item">
                 <Link to={"/coordinator"}>Coordinator</Link>
+              </li>
+              <li class="nav-item">
+                <button onClick={LogOut}>Log Out</button>
               </li>
             </ul>
           </div>

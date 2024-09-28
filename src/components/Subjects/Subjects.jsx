@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import image from "../../images/logo.png";
 import "./Subjects.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faX } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +17,7 @@ const Subjects = () => {
   const [allSubjects, setAllSubjects] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [getLoading, setGetLoading] = useState(false);
   const [subjectId, setSubjectId] = useState("");
   const selectImage = (e) => {
     setImageURL(e.target.files[0]);
@@ -50,7 +50,7 @@ const Subjects = () => {
     }
   };
   const getAllSubjectsApi = () => {
-    GetSubjectAPI(setError, setLoading, setAllSubjects);
+    GetSubjectAPI(setError, setGetLoading, setAllSubjects);
   };
   const closeDeleteSubject = () => {
     document.querySelector(".delete_subject").style.display = "none";
@@ -142,30 +142,32 @@ const Subjects = () => {
           </div>
         </div>
         <div className="subjects_list">
-          {loading
-            ? "..."
-            : allSubjects?.map((item) => {
-                return (
-                  <div className="subjects_item" key={item._id}>
-                    <Link to={`/lectures/${item._id}`}>
-                      <h3>{item.name}</h3>
-                      <img src={item.image} />
-                    </Link>
-                    <div className="subject_btn">
-                      <button
-                        onClick={() =>
-                          openUpdateSubject(item._id, item.name, item.image)
-                        }
-                      >
-                        Update
-                      </button>
-                      <button onClick={() => openDeleteSubject(item._id)}>
-                        Delete
-                      </button>
-                    </div>
+          {getLoading ? (
+            <span class="loader"></span>
+          ) : (
+            allSubjects?.map((item) => {
+              return (
+                <div className="subjects_item" key={item._id}>
+                  <Link to={`/lectures/${item._id}`}>
+                    <h3>{item.name}</h3>
+                    <img src={item.image} />
+                  </Link>
+                  <div className="subject_btn">
+                    <button
+                      onClick={() =>
+                        openUpdateSubject(item._id, item.name, item.image)
+                      }
+                    >
+                      Update
+                    </button>
+                    <button onClick={() => openDeleteSubject(item._id)}>
+                      Delete
+                    </button>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </section>

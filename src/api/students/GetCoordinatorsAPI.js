@@ -1,6 +1,6 @@
-const URL = "https://back.dr-python.center/subject/get";
+const URL = "https://back.dr-python.center/coordinator/get";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
-const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
+const GetCoordinatorsAPI = async (setError, setGetLoading, setAllCoordinators) => {
     setGetLoading(true)
     try {
         const response = await fetch(URL, {
@@ -14,7 +14,7 @@ const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
         const result = await response.json();
 
         if (response.ok) {
-            setAllSubjects(result.subjects)
+            setAllCoordinators(result.coordinators)
             setGetLoading(false)
         } else {
             if (response.status == 500) {
@@ -31,4 +31,4 @@ const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
 
     }
 }
-export default GetSubjectAPI;
+export default GetCoordinatorsAPI;

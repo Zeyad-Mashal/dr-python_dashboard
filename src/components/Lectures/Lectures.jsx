@@ -15,10 +15,12 @@ const Lectures = () => {
   const [subnames, setSubnames] = useState([{ name: "", videoUrl: [] }]);
   const [allLectures, setAllLectures] = useState([]);
   const [lectureName, setLectureName] = useState("");
-  const [pdfFile, setPdfFile] = useState(["link1", "Link2"]);
+  const [pdfFile, setPdfFile] = useState([]);
+  const [pdfInput, setPdfInput] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [lectureId, setLectureId] = useState("");
+  const [getLectureLoading, setGetLectureLoading] = useState(false);
   const handleSubnameChange = (index, name) => {
     const updatedSubnames = subnames.map((subname, i) =>
       i === index ? { ...subname, name } : subname
@@ -100,6 +102,18 @@ const Lectures = () => {
     document.querySelector(".delete_lecture").style.display = "none";
   };
 
+  const addPdf = () => {
+    if (pdfInput) {
+      setPdfFile([...pdfFile, pdfInput]);
+      setPdfInput(""); // Clear the input after adding
+    }
+  };
+
+  const removePdf = (index) => {
+    const updatedPdfFiles = pdfFile.filter((_, i) => i !== index);
+    setPdfFile(updatedPdfFiles);
+  };
+
   const addLectureApi = () => {
     const data = {
       name: lectureName,
@@ -109,7 +123,7 @@ const Lectures = () => {
     AddLectureAPI(data, setError, setLoading, setAllLectures, subjectId);
   };
   const getAllLecturesApi = () => {
-    GetSubjectAPI(setError, setLoading, setAllLectures, subjectId);
+    GetSubjectAPI(setError, setGetLectureLoading, setAllLectures, subjectId);
   };
   const UpdateLectureApi = () => {
     const data = {
@@ -200,8 +214,34 @@ const Lectures = () => {
               )}
             </div>
           ))}
+          <div className="pdf_section">
+            <h4>Add PDF URL</h4>
+            <div className="pdfFiles_container">
+              <input
+                type="text"
+                placeholder="PDF URL"
+                value={pdfInput}
+                onChange={(e) => setPdfInput(e.target.value)}
+              />
+              <button onClick={addPdf}>
+                {" "}
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+            <div className="pdfFiles_array">
+              {pdfFile.map((pdf, index) => (
+                <div key={index} className="pdf_item">
+                  <a href={pdf} target="_blank" rel="noopener noreferrer">
+                    {pdf}
+                  </a>
+                  <button onClick={() => removePdf(index)}>X</button>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {error}
-          <button onClick={addLectureApi}>
+          <button onClick={addLectureApi} className="add_btn">
             {loading ? "loading..." : "Add Lecture"}
           </button>
         </div>
@@ -265,8 +305,33 @@ const Lectures = () => {
               )}
             </div>
           ))}
+          <div className="pdf_section">
+            <h4>Add PDF URL</h4>
+            <div className="pdfFiles_container">
+              <input
+                type="text"
+                placeholder="PDF URL"
+                value={pdfInput}
+                onChange={(e) => setPdfInput(e.target.value)}
+              />
+              <button onClick={addPdf}>
+                {" "}
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+            <div className="pdfFiles_array">
+              {pdfFile.map((pdf, index) => (
+                <div key={index} className="pdf_item">
+                  <a href={pdf} target="_blank" rel="noopener noreferrer">
+                    {pdf}
+                  </a>
+                  <button onClick={() => removePdf(index)}>X</button>
+                </div>
+              ))}
+            </div>
+          </div>
           {error}
-          <button onClick={UpdateLectureApi}>
+          <button onClick={UpdateLectureApi} className="add_btn">
             {loading ? "Loading..." : "Update"}
           </button>
         </div>
@@ -282,30 +347,32 @@ const Lectures = () => {
           </div>
         </div>
         <div className="lectures_list">
-          {loading
-            ? "Loading..,"
-            : allLectures.map((item) => {
-                return (
-                  <div className="lectures_item">
-                    <button
-                      onClick={() =>
-                        openUpdatelec(
-                          item._id,
-                          item.name,
-                          item.parts,
-                          item.pdfFile
-                        )
-                      }
-                    >
-                      update
-                    </button>
-                    <h3>{item.name}</h3>
-                    <button onClick={() => openDeletelec(item._id)}>
-                      delete
-                    </button>
-                  </div>
-                );
-              })}
+          {getLectureLoading ? (
+            <span class="loader"></span>
+          ) : (
+            allLectures.map((item) => {
+              return (
+                <div className="lectures_item">
+                  <button
+                    onClick={() =>
+                      openUpdatelec(
+                        item._id,
+                        item.name,
+                        item.parts,
+                        item.pdfFile
+                      )
+                    }
+                  >
+                    update
+                  </button>
+                  <h3>{item.name}</h3>
+                  <button onClick={() => openDeletelec(item._id)}>
+                    delete
+                  </button>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </section>

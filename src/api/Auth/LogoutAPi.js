@@ -1,8 +1,8 @@
-const URL = "https://back.dr-python.center/user/login";
-const LoginAPI = async (data, setError) => {
+const URL = "https://back.dr-python.center/user/logout";
+const LogoutAPi = async (data, setError) => {
     try {
         const response = await fetch(URL, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -12,14 +12,11 @@ const LoginAPI = async (data, setError) => {
         const result = await response.json();
 
         if (response.ok) {
-            localStorage.setItem("USER_TOKEN", result.token)
+            localStorage.removeItem("USER_TOKEN")
             window.location.reload()
-
         } else {
-            if (response.status == 400) {
+            if (response.status == 500) {
                 setError(result.message);
-            } else if (response.status == 403) {
-                setError(response.message);
             } else {
                 setError(response.message);
             }
@@ -28,4 +25,4 @@ const LoginAPI = async (data, setError) => {
         setError('An error occurred');
     }
 }
-export default LoginAPI;
+export default LogoutAPi;

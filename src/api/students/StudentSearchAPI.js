@@ -1,9 +1,9 @@
-const URL = "https://back.dr-python.center/subject/get";
+const URL = "https://back.dr-python.center/user/search?role=Student&q=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
-const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
-    setGetLoading(true)
+const StudentSearchAPI = async (setError, setSearchLoading, setAllStudents, searchedKey) => {
+    setSearchLoading(true)
     try {
-        const response = await fetch(URL, {
+        const response = await fetch(`${URL}${searchedKey}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,21 +14,21 @@ const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
         const result = await response.json();
 
         if (response.ok) {
-            setAllSubjects(result.subjects)
-            setGetLoading(false)
+            setAllStudents(result.users)
+            setSearchLoading(false)
         } else {
-            if (response.status == 500) {
+            if (response.status == 400) {
                 setError(result.message);
-                setGetLoading(false)
+                setSearchLoading(false)
             } else {
                 setError(response.message);
-                setGetLoading(false)
+                setSearchLoading(false)
             }
         }
     } catch (error) {
         setError('An error occurred');
-        setGetLoading(false)
+        setSearchLoading(false)
 
     }
 }
-export default GetSubjectAPI;
+export default StudentSearchAPI;

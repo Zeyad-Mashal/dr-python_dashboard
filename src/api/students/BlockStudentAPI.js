@@ -1,10 +1,10 @@
-const URL = "https://back.dr-python.center/lecture/get/";
+const URL = "https://back.dr-python.center/student/block/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
-const GetSubjectAPI = async (setError, setGetLectureLoading, setAllLectures, subjectId) => {
-    setGetLectureLoading(true)
+const BlockStudentAPI = async (setError, setLoading, setAllStudents, studentId, currentPage) => {
+    setLoading(true)
     try {
-        const response = await fetch(`${URL}${subjectId}`, {
-            method: 'GET',
+        const response = await fetch(`${URL}${studentId}/${currentPage}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 "authorization": `drpz0${USER_TOKEN}`
@@ -14,21 +14,22 @@ const GetSubjectAPI = async (setError, setGetLectureLoading, setAllLectures, sub
         const result = await response.json();
 
         if (response.ok) {
-            setAllLectures(result.lectures)
-            setGetLectureLoading(false)
+            setAllStudents(result.students)
+            setLoading(false)
+            document.querySelector(".blockStudent").style.display = "none";
         } else {
             if (response.status == 404) {
                 setError(result.message);
-                setGetLectureLoading(false)
+                setLoading(false)
             } else {
                 setError(response.message);
-                setGetLectureLoading(false)
+                setLoading(false)
             }
         }
     } catch (error) {
         setError('An error occurred');
-        setGetLectureLoading(false)
+        setLoading(false)
 
     }
 }
-export default GetSubjectAPI;
+export default BlockStudentAPI;
