@@ -19,9 +19,9 @@ const LoginAPI = async (data, setError) => {
             if (response.status == 400) {
                 setError(result.message);
             } else if (response.status == 403) {
-                setError(response.message);
+                setError(result.message);
             } else {
-                setError(response.message);
+                setError(result.message);
             }
         }
     } catch (error) {

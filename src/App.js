@@ -6,6 +6,7 @@ import Lectures from './components/Lectures/Lectures';
 import Students from './components/Students/Students';
 import Coordinator from './components/Coordinator/Coordinator';
 import Login from './components/Login/Login';
+import Statistics from './components/Statistics/Statistics';
 function App() {
   const isAuth = localStorage.getItem("USER_TOKEN")
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/lectures/:subjectId" element={isAuth ? <Lectures /> : <Navigate to='/' />} />
         <Route path="/students" element={isAuth ? <Students /> : <Navigate to='/' />} />
         <Route path="/coordinator" element={isAuth ? <Coordinator /> : <Navigate to='/' />} />
+        <Route path="/statistics/:studentId" element={isAuth ? <Statistics /> : <Navigate to='/' />} />
       </Routes>
     </div>
   );

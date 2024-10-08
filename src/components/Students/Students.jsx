@@ -7,6 +7,7 @@ import {
   faTrash,
   faBan,
   faRightFromBracket,
+  faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import GetSubjectAPI from "../../api/subject/getAllSubjectsAPI";
 import AddStudentsAPI from "../../api/students/AddStudentsAPI";
@@ -17,6 +18,7 @@ import LogOutStudentAPI from "../../api/students/LogOutStudentAPI";
 import StudentSearchAPI from "../../api/students/StudentSearchAPI";
 import DeleteStudentAPI from "../../api/students/DeleteStudentAPI";
 import GetCoordinatorsAPI from "../../api/students/GetCoordinatorsAPI";
+import { Link } from "react-router-dom";
 const Students = () => {
   useEffect(() => {
     getAllSubject();
@@ -491,6 +493,7 @@ const Students = () => {
                 <th>Email</th>
                 <th>Password</th>
                 <th>Actions</th>
+                <th>Statistics</th>
               </tr>
               {allStudents.map((item) => {
                 return (
@@ -498,7 +501,7 @@ const Students = () => {
                     <td>{item.name}</td>
                     <td>{item.phone}</td>
                     <td>{item.email}</td>
-                    <td>{item.password}</td>
+                    <td>*******</td>
                     <td className="student_info">
                       <FontAwesomeIcon
                         icon={faUserPen}
@@ -530,6 +533,11 @@ const Students = () => {
                         icon={faRightFromBracket}
                         onClick={() => openLogOut(item._id)}
                       />
+                    </td>
+                    <td>
+                      <Link to={`/statistics/${item._id}`}>
+                        <FontAwesomeIcon icon={faEllipsisVertical} />{" "}
+                      </Link>
                     </td>
                   </tr>
                 );

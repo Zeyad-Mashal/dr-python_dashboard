@@ -21,6 +21,7 @@ const Lectures = () => {
   const [loading, setLoading] = useState(false);
   const [lectureId, setLectureId] = useState("");
   const [getLectureLoading, setGetLectureLoading] = useState(false);
+  const [views, setViews] = useState("");
   const handleSubnameChange = (index, name) => {
     const updatedSubnames = subnames.map((subname, i) =>
       i === index ? { ...subname, name } : subname
@@ -115,30 +116,40 @@ const Lectures = () => {
   };
 
   const addLectureApi = () => {
-    const data = {
-      name: lectureName,
-      parts: subnames,
-      pdfFile,
-    };
-    AddLectureAPI(data, setError, setLoading, setAllLectures, subjectId);
+    if (views === "" || lectureName === "") {
+      setError("Please fill in all fields");
+    } else {
+      const data = {
+        name: lectureName,
+        parts: subnames,
+        pdfFile,
+        maxViews: views,
+      };
+      AddLectureAPI(data, setError, setLoading, setAllLectures, subjectId);
+    }
   };
   const getAllLecturesApi = () => {
     GetSubjectAPI(setError, setGetLectureLoading, setAllLectures, subjectId);
   };
   const UpdateLectureApi = () => {
-    const data = {
-      name: lectureName,
-      parts: subnames,
-      pdfFile,
-    };
-    UpdateLectureAPI(
-      data,
-      setError,
-      setLoading,
-      setAllLectures,
-      subjectId,
-      lectureId
-    );
+    if (views === "" || lectureName === "") {
+      setError("Please fill in all fields");
+    } else {
+      const data = {
+        name: lectureName,
+        parts: subnames,
+        pdfFile,
+        maxViews: views,
+      };
+      UpdateLectureAPI(
+        data,
+        setError,
+        setLoading,
+        setAllLectures,
+        subjectId,
+        lectureId
+      );
+    }
   };
   const deleteLectureApi = () => {
     deleteLectureAPI(
@@ -162,6 +173,12 @@ const Lectures = () => {
             placeholder="Lecture name"
             value={lectureName}
             onChange={(e) => setLectureName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="max views"
+            value={views}
+            onChange={(e) => setViews(e.target.value)}
           />
           {subnames.map((subname, index) => (
             <div key={index} className="subname_section">
@@ -253,6 +270,12 @@ const Lectures = () => {
             placeholder="Lecture name"
             value={lectureName}
             onChange={(e) => setLectureName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="max views"
+            value={views}
+            onChange={(e) => setViews(e.target.value)}
           />
           {subnames.map((subname, index) => (
             <div key={index} className="subname_section">

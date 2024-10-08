@@ -1,0 +1,100 @@
+.statistics,
+.Statistics_cotanier {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+.statistics > h2 {
+  font-size: 2.5rem;
+  margin-top: 5rem;
+  text-decoration: underline;
+}
+.subject_list,
+.lecture_list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.subject_list {
+  padding-bottom: 1rem;
+}
+.lecture_list {
+  border-top: 2px dashed #aaa;
+  border-bottom: 2px dashed #aaa;
+  padding: 1rem 0;
+}
+.subject_list > p,
+.lecture_list > p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.subject_list select,
+.lecture_list select {
+  width: 50%;
+  padding: 1rem;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+.statistics_table {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.statistics_table > h3 {
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+table {
+  width: 100%;
+  margin: 1rem;
+}
+
+.views_counter_popup {
+  position: absolute;
+  background-color: #fff;
+  width: 500px;
+  border-radius: 16px;
+  box-shadow: 4px 4px 10px #aaa;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+.views_counter_popup svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.views_counter_popup svg:hover {
+  color: #555;
+  transform: scale(1.1);
+}
+.views_counter_popup p {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.views_counter_popup input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #000;
+}
+.views_counter_popup button {
+  padding: 10px;
+  width: 120px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  font-weight: bold;
+}
