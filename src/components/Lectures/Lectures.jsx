@@ -83,11 +83,12 @@ const Lectures = () => {
   const closeAddlec = () => {
     document.querySelector(".add_lecture").style.display = "none";
   };
-  const openUpdatelec = (lectureId, lectureName, subnames, pdfFile) => {
+  const openUpdatelec = (lectureId, lectureName, subnames, pdfFile, views) => {
     setLectureId(lectureId);
     setLectureName(lectureName);
     setSubnames(subnames);
     setPdfFile(pdfFile);
+    setViews(views);
     document.querySelector(".update_lecture").style.display = "flex";
   };
 
@@ -382,7 +383,8 @@ const Lectures = () => {
                         item._id,
                         item.name,
                         item.parts,
-                        item.pdfFile
+                        item.pdfFile,
+                        item.maxViews
                       )
                     }
                   >
