@@ -7,7 +7,7 @@ import "bootstrap/dist/js/bootstrap.js"
 import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter basename='dr-python_dashboard'>
+  <BrowserRouter>
     <React.StrictMode>
       <App />
     </React.StrictMode>
