@@ -296,6 +296,18 @@ const Students = () => {
   const getAllCoordinators = () => {
     GetCoordinatorsAPI(setError, setGetLoading, setAllCoordinators);
   };
+  const generatePassword = () => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$&";
+    let newPassword = "";
+    for (let i = 0; i < 5; i++) {
+      newPassword += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    setPassword(newPassword); // Set the generated password
+  };
+
   return (
     <section className="students">
       <div className="students_container">
@@ -371,6 +383,9 @@ const Students = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button onClick={generatePassword} className="generatePassword">
+                Generate
+              </button>
             </div>
 
             <div className="addSubjects_array">
