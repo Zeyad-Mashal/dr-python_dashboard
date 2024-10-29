@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./statistics.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faX } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faX, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import getSubject from "../../api/Statistics/getSubject";
 import getLectures from "../../api/Statistics/getLectures";
 import getTrackingDetails from "../../api/Statistics/getTrackingDetails";
 import UpdateViews from "../../api/Statistics/UpdateViews";
+import removeLink from "../../api/Statistics/removeLink";
 const Statistics = () => {
   useEffect(() => {
     getAllSubjects();
@@ -92,6 +93,27 @@ const Statistics = () => {
       );
     }
   };
+  const openDelete = (videoUrl) => {
+    setVideoUrl(videoUrl);
+    document.querySelector(".deleteLink").style.display = "flex";
+  };
+  const closeDelete = () => {
+    document.querySelector(".deleteLink").style.display = "none";
+  };
+  const removeLinkAPI = () => {
+    const data = {
+      videoUrl,
+    };
+    removeLink(
+      data,
+      setError,
+      setLoading,
+      studentId,
+      lecuteID,
+      setDetails,
+      setMaxViwes
+    );
+  };
   return (
     <section className="statistics">
       <h2>Student Statistics</h2>
@@ -145,6 +167,10 @@ const Statistics = () => {
                       icon={faEye}
                       onClick={() => openViews(item.videoUrl)}
                     />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      onClick={() => openDelete(item.videoUrl)}
+                    />
                   </td>
                 </tr>
               );
@@ -164,6 +190,15 @@ const Statistics = () => {
           <button onClick={updateViewsAPI}>
             {loading ? <span className="loader"></span> : "Set Views"}
           </button>
+        </div>
+        <div className="deleteLink">
+          <h2>Delete Link</h2>
+          <div className="delete_link">
+            <button onClick={removeLinkAPI}>
+              {loading ? "loading..." : "Delete"}
+            </button>
+            <button onClick={closeDelete}>Close</button>
+          </div>
         </div>
       </div>
     </section>

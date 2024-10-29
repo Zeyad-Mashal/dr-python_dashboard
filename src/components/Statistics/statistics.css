@@ -56,8 +56,11 @@ table {
   width: 100%;
   margin: 1rem;
 }
-
-.views_counter_popup {
+.views svg {
+  margin: 1rem;
+}
+.views_counter_popup,
+.deleteLink {
   position: absolute;
   background-color: #fff;
   width: 500px;
@@ -69,6 +72,23 @@ table {
   flex-direction: column;
   padding: 1rem;
   gap: 1rem;
+}
+.delete_link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+.delete_link button {
+  padding: 5px;
+  width: 100px;
+  border: 2px solid #aaa;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+.delete_link button:hover {
+  border: 2px solid #000;
 }
 .views_counter_popup svg {
   position: absolute;
