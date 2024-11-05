@@ -429,7 +429,7 @@ const Coordinator = () => {
 
         <div className="coordinator_students">
           <FontAwesomeIcon icon={faX} onClick={studentCoordinatorClose} />
-          <h2>Students Loged out:</h2>
+          <h2>Students Loged in:</h2>
           <span>{counter}</span>
           <table>
             <tr>
