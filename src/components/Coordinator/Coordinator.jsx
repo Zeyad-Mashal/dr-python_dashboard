@@ -404,9 +404,13 @@ const Coordinator = () => {
                 onChange={(e) => setSelectedSubject(e.target.value)}
               >
                 <option value="">Select a Courses</option>
-                <option value="programming">Programming</option>
-                <option value="mathematics">Mathematics</option>
-                <option value="science">Science</option>
+                {allSubjects.map((item) => {
+                  return (
+                    <option key={item._id} value={item.name}>
+                      {item.name}
+                    </option>
+                  );
+                })}
               </select>
               <button onClick={handleAddSubject}>+</button>
             </div>
