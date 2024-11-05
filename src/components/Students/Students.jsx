@@ -516,7 +516,7 @@ const Students = () => {
                     <td>{item.name}</td>
                     <td>{item.phone}</td>
                     <td>{item.email}</td>
-                    <td>*******</td>
+                    <td>{item.password}</td>
                     <td className="student_info">
                       <FontAwesomeIcon
                         icon={faUserPen}

@@ -7,6 +7,7 @@ import {
   faTrash,
   faBan,
   faRightFromBracket,
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import GetSubjectAPI from "../../api/subject/getAllSubjectsAPI";
 import AddCoordinatorAPI from "../../api/Coordinator/AddCoordinatorAPI";
@@ -15,6 +16,7 @@ import updateCoordinatorAPI from "../../api/Coordinator/updateCoordinatorAPI";
 import CoordinatorSearchAPI from "../../api/Coordinator/CoordinatorSearchAPI";
 import BlockCoordinatorAPI from "../../api/Coordinator/BlockCoordinatorAPI";
 import DeleteCoodinatorAPI from "../../api/Coordinator/DeleteCoodinatorAPI";
+import studentCoordinator from "../../api/Coordinator/studentCoordinator";
 const Coordinator = () => {
   useEffect(() => {
     getAllSubject();
@@ -41,7 +43,8 @@ const Coordinator = () => {
   const [coordinatorId, setCoordinatorId] = useState("");
   const [searchedKey, setSearchedKey] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
-
+  const [counter, setCounter] = useState(0);
+  const [allStudentCoordinator, setAllStudentCoordinator] = useState([]);
   const addCoordinator = () => {
     document.querySelector(".addStudents").style.display = "flex";
   };
@@ -239,6 +242,22 @@ const Coordinator = () => {
       currentPage
     );
   };
+  const studentCoordinatorOpen = (coordinatorId) => {
+    document.querySelector(".coordinator_students").style.display = "flex";
+    studentCoordinatorStatus(coordinatorId);
+  };
+  const studentCoordinatorClose = () => {
+    document.querySelector(".coordinator_students").style.display = "none";
+  };
+  const studentCoordinatorStatus = (coordinatorId) => {
+    studentCoordinator(
+      setError,
+      setGetCoordintaorLoading,
+      setAllStudentCoordinator,
+      coordinatorId,
+      setCounter
+    );
+  };
   return (
     <section className="students">
       <div className="students_container">
@@ -408,6 +427,29 @@ const Coordinator = () => {
           </button>
         </div>
 
+        <div className="coordinator_students">
+          <FontAwesomeIcon icon={faX} onClick={studentCoordinatorClose} />
+          <h2>Students Loged out:</h2>
+          <span>{counter}</span>
+          <table>
+            <tr>
+              <th>User Name</th>
+              <th>Phone Number</th>
+              <th>Email</th>
+            </tr>
+
+            {allStudentCoordinator?.map((item) => {
+              return (
+                <tr>
+                  <td>{item.name}</td>
+                  <td>{item.phone}</td>
+                  <td>{item.email}</td>
+                </tr>
+              );
+            })}
+          </table>
+        </div>
+
         <div className="allStudents">
           {getCoordintaorLoading ? (
             "Loading ..."
@@ -453,6 +495,10 @@ const Coordinator = () => {
                         icon={faTrash}
                         onClick={() => openDelete(item._id)}
                         className="deleteStudentBtn"
+                      />
+                      <FontAwesomeIcon
+                        icon={faChartLine}
+                        onClick={() => studentCoordinatorOpen(item._id)}
                       />
                     </td>
                   </tr>

@@ -2,3 +2,35 @@
   color: green;
   transform: scale(1.3);
 }
+.coordinator_students {
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  overflow-y: auto;
+  position: fixed;
+  top: 20%;
+  z-index: 999;
+  background-color: #fff;
+  box-shadow: #aaa 4px 4px 10px;
+  border-radius: 10px;
+  display: none;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+.coordinator_students > svg {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.coordinator_students span {
+  font-size: 2rem;
+  color: green;
+  font-weight: bold;
+}
+.coordinator_students table {
+  width: 90%;
+}
