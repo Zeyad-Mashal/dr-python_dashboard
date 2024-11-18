@@ -242,21 +242,22 @@ const Coordinator = () => {
       currentPage
     );
   };
-  const studentCoordinatorOpen = (coordinatorId) => {
-    document.querySelector(".coordinator_students").style.display = "flex";
-    studentCoordinatorStatus(coordinatorId);
-  };
-  const studentCoordinatorClose = () => {
-    document.querySelector(".coordinator_students").style.display = "none";
-  };
-  const studentCoordinatorStatus = (coordinatorId) => {
+
+  const studentCoordinatorStatus = (id) => {
     studentCoordinator(
       setError,
       setGetCoordintaorLoading,
       setAllStudentCoordinator,
-      coordinatorId,
+      id,
       setCounter
     );
+  };
+  const studentCoordinatorOpen = (id) => {
+    document.querySelector(".coordinator_students").style.display = "flex";
+    studentCoordinatorStatus(id);
+  };
+  const studentCoordinatorClose = () => {
+    document.querySelector(".coordinator_students").style.display = "none";
   };
   return (
     <section className="students">
@@ -434,7 +435,9 @@ const Coordinator = () => {
         <div className="coordinator_students">
           <FontAwesomeIcon icon={faX} onClick={studentCoordinatorClose} />
           <h2>Students Loged in:</h2>
-          <span>{counter}</span>
+          <span>
+            {getCoordintaorLoading ? <span class="Cloader"></span> : counter}
+          </span>
           <table>
             <tr>
               <th>User Name</th>
