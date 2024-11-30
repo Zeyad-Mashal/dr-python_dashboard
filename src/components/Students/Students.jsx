@@ -50,6 +50,25 @@ const Students = () => {
   const [getLoading, setGetLoading] = useState(false);
   const [coordinatorName, setCoordinatorName] = useState("");
   const [coordinatorId, setCoordinatorId] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (value) => {
+    // Regex pattern to validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (value.includes(" ")) {
+      return "Email should not contain spaces.";
+    } else if (!emailRegex.test(value)) {
+      return "Please enter a valid email address.";
+    }
+    return "";
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    const error = validateEmail(value);
+    setEmail(value);
+    setEmailError(error);
+  };
   const handleAddSubject = () => {
     const subjectId = allSubjects.filter((e) => e.name === selectedSubject)[0]
       ._id;
@@ -308,10 +327,37 @@ const Students = () => {
     setPassword(newPassword); // Set the generated password
   };
 
+  const openDeleteAll = () => {
+    document.querySelector(".delete_all").style.display = "flex";
+  };
+
+  const closeDeleteAll = () => {
+    document.querySelector(".delete_all").style.display = "none";
+  };
+
   return (
     <section className="students">
       <div className="students_container">
         <div className="search_input">
+          <div class="deleteAll">
+            <div class="delete_check">
+              <span>حذف كل الطلبة *</span>
+              <div className="delete_action">
+                <input type="checkbox" id="deleteCheckbox" />
+                <div class="delete_api">
+                  <button onClick={openDeleteAll}>حذف</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="delete_all">
+            <h3>خلي بالك هتمسح كل الطلبة الي في المنصة !!!</h3>
+            <div className="delete_btns">
+              <button>حذف</button>
+              <button onClick={closeDeleteAll}>إلغاء</button>
+            </div>
+          </div>
           <input
             type="text"
             placeholder="بحث بأسم و رقم الطالب"
@@ -375,7 +421,7 @@ const Students = () => {
                 type="text"
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
               />
               <input
                 type="text"
@@ -417,6 +463,8 @@ const Students = () => {
               ))}
             </div>
           </div>
+          {emailError && <p style={{ color: "red" }}>{emailError}</p>}
+
           {error}
           <button onClick={addStudentAPI}>
             {loading ? "Loading..." : "Add"}
@@ -501,63 +549,65 @@ const Students = () => {
               <span class="loader"></span>
             </div>
           ) : (
-            <table>
-              <tr>
-                <th>Username</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Actions</th>
-                <th>Statistics</th>
-              </tr>
-              {allStudents.map((item) => {
-                return (
-                  <tr>
-                    <td>{item.name}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.email}</td>
-                    <td>{item.password}</td>
-                    <td className="student_info">
-                      <FontAwesomeIcon
-                        icon={faUserPen}
-                        onClick={() =>
-                          openUpdate(
-                            item.name,
-                            item.phone,
-                            item.email,
-                            item.password,
-                            item.subjects,
-                            item._id,
-                            item?.coordinator?.name
-                          )
-                        }
-                        className="updateStudent"
-                      />
+            <>
+              <table>
+                <tr>
+                  <th>Username</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th>Actions</th>
+                  <th>Statistics</th>
+                </tr>
+                {allStudents.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.phone}</td>
+                      <td>{item.email}</td>
+                      <td>{item.password}</td>
+                      <td className="student_info">
+                        <FontAwesomeIcon
+                          icon={faUserPen}
+                          onClick={() =>
+                            openUpdate(
+                              item.name,
+                              item.phone,
+                              item.email,
+                              item.password,
+                              item.subjects,
+                              item._id,
+                              item?.coordinator?.name
+                            )
+                          }
+                          className="updateStudent"
+                        />
 
-                      <FontAwesomeIcon
-                        icon={faBan}
-                        onClick={() => openBlock(item._id)}
-                        className={item.isBlocked ? "activeBlock" : ""}
-                      />
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        onClick={() => openDelete(item._id)}
-                        className="deleteStudentBtn"
-                      />
-                      <FontAwesomeIcon
-                        icon={faRightFromBracket}
-                        onClick={() => openLogOut(item._id)}
-                      />
-                    </td>
-                    <td>
-                      <Link to={`/statistics/${item._id}`}>
-                        <FontAwesomeIcon icon={faEllipsisVertical} />{" "}
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </table>
+                        <FontAwesomeIcon
+                          icon={faBan}
+                          onClick={() => openBlock(item._id)}
+                          className={item.isBlocked ? "activeBlock" : ""}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={() => openDelete(item._id)}
+                          className="deleteStudentBtn"
+                        />
+                        <FontAwesomeIcon
+                          icon={faRightFromBracket}
+                          onClick={() => openLogOut(item._id)}
+                        />
+                      </td>
+                      <td>
+                        <Link to={`/statistics/${item._id}`}>
+                          <FontAwesomeIcon icon={faEllipsisVertical} />{" "}
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </table>
+            </>
           )}
         </div>
         <div className="pagination">
