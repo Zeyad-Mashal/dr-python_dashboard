@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/watchTracking/update/";
+const URL = "https://dr-python-mvm9.onrender.com/watchTracking/update/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const UpdateViews = async (data, setError, setLoading, studentId, lectureId, setDetails, setMaxViwes) => {
     setLoading(true)

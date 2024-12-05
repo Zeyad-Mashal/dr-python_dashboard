@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/student/logout/";
+const URL = "https://dr-python-mvm9.onrender.com/student/logout/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const LogOutStudentAPI = async (setError, setLoading, setAllStudents, studentId, currentPage) => {
     setLoading(true)

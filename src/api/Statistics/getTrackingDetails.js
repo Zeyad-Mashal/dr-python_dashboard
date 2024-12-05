@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/watchTracking/get/";
+const URL = "https://dr-python-mvm9.onrender.com/watchTracking/get/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const getTrackingDetails = async (setError, setGetLectureLoading, setDetails, studentId, lectureId, setMaxViwes) => {
     setGetLectureLoading(true)

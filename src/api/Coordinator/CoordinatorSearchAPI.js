@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/user/search?role=Coordinator&q=";
+const URL = "https://dr-python-mvm9.onrender.com/user/search?role=Coordinator&q=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const CoordinatorSearchAPI = async (setError, setSearchLoading, setAllCoordinators, searchedKey) => {
     setSearchLoading(true)

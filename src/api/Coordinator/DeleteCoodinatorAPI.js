@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/coordinator/delete/";
+const URL = "https://dr-python-mvm9.onrender.com/coordinator/delete/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const DeleteCoodinatorAPI = async (setError, setLoading, setAllCoordinators, coordinatorId, setTotalpage, currentPage) => {
     setLoading(true)

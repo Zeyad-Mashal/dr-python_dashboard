@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/user/get?role=Coordinator&page=";
+const URL = "https://dr-python-mvm9.onrender.com/user/get?role=Coordinator&page=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const getAllCoordinatorAPI = async (setError, setGetCoordintaorLoading, setAllCoordinators, setTotalpage, setCurrentPage, newpage) => {
     setGetCoordintaorLoading(true)

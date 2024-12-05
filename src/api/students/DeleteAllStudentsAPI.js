@@ -1,9 +1,9 @@
-const URL = "https://dr-python-mvm9.onrender.com/lecture/remove/";
+const URL = "https://dr-python-mvm9.onrender.com/student/deleteAll";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
-const deleteLectureAPI = async (setError, setLoading, setAllLectures, subjectId, lectureId) => {
+const DeleteAllStudentsAPI = async (setError, setLoading, setAllStudents) => {
     setLoading(true)
     try {
-        const response = await fetch(`${URL}${lectureId}/${subjectId}`, {
+        const response = await fetch(`${URL}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,9 +14,9 @@ const deleteLectureAPI = async (setError, setLoading, setAllLectures, subjectId,
         const result = await response.json();
 
         if (response.ok) {
-            setAllLectures(result.lectures)
+            setAllStudents(result.students)
             setLoading(false)
-            document.querySelector(".delete_lecture").style.display = "none";
+            document.querySelector(".delete_all").style.display = "none";
         } else {
             if (response.status == 404) {
                 setError(result.message);
@@ -32,4 +32,4 @@ const deleteLectureAPI = async (setError, setLoading, setAllLectures, subjectId,
 
     }
 }
-export default deleteLectureAPI;
+export default DeleteAllStudentsAPI;

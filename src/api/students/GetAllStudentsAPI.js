@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/user/get?role=Student&page=";
+const URL = "https://dr-python-mvm9.onrender.com/user/get?role=Student&page=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const GetAllStudentsAPI = async (setError, setGetStudent, setAllStudents, setTotalpage, setCurrentPage, newpage) => {
     setGetStudent(true)

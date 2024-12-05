@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/user/search?role=Student&q=";
+const URL = "https://dr-python-mvm9.onrender.com/user/search?role=Student&q=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const StudentSearchAPI = async (setError, setSearchLoading, setAllStudents, searchedKey) => {
     setSearchLoading(true)

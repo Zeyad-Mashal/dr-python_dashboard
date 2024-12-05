@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/lecture/update/";
+const URL = "https://dr-python-mvm9.onrender.com/lecture/update/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const UpdateLectureAPI = async (data, setError, setLoading, setAllLectures, subjectId, lectureId) => {
     setLoading(true)

@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/subject/get";
+const URL = "https://dr-python-mvm9.onrender.com/subject/get";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const GetSubjectAPI = async (setError, setGetLoading, setAllSubjects) => {
     setGetLoading(true)

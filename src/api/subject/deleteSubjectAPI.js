@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/subject/remove/";
+const URL = "https://dr-python-mvm9.onrender.com/subject/remove/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const DeleteSubjectAPI = async (setError, setLoading, setAllSubjects, subjectId) => {
     setLoading(true)

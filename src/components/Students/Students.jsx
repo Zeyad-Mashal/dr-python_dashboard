@@ -18,6 +18,7 @@ import LogOutStudentAPI from "../../api/students/LogOutStudentAPI";
 import StudentSearchAPI from "../../api/students/StudentSearchAPI";
 import DeleteStudentAPI from "../../api/students/DeleteStudentAPI";
 import GetCoordinatorsAPI from "../../api/students/GetCoordinatorsAPI";
+import DeleteAllStudentsAPI from "../../api/students/DeleteAllStudentsAPI";
 import { Link } from "react-router-dom";
 const Students = () => {
   useEffect(() => {
@@ -335,6 +336,17 @@ const Students = () => {
     document.querySelector(".delete_all").style.display = "none";
   };
 
+  const deleteAllStudents = () => {
+    DeleteAllStudentsAPI(
+      setError,
+      setLoading,
+      setAllStudents,
+      studentId,
+      setTotalpage,
+      currentPage
+    );
+  };
+
   return (
     <section className="students">
       <div className="students_container">
@@ -354,7 +366,9 @@ const Students = () => {
           <div className="delete_all">
             <h3>خلي بالك هتمسح كل الطلبة الي في المنصة !!!</h3>
             <div className="delete_btns">
-              <button>حذف</button>
+              <button onClick={deleteAllStudents}>
+                {loading ? "Deleting..." : "حذف"}
+              </button>
               <button onClick={closeDeleteAll}>إلغاء</button>
             </div>
           </div>
@@ -559,7 +573,7 @@ const Students = () => {
                   <th>Actions</th>
                   <th>Statistics</th>
                 </tr>
-                {allStudents.map((item) => {
+                {allStudents?.map((item) => {
                   return (
                     <tr>
                       <td>{item.name}</td>

@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/coordinator/studentCount/";
+const URL = "https://dr-python-mvm9.onrender.com/coordinator/studentCount/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const studentCoordinator = async (setError, setGetCoordintaorLoading, setAllStudentCoordinator, coordinatorId, setCounter) => {
     setGetCoordintaorLoading(true)

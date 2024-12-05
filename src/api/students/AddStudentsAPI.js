@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/student/register?page=";
+const URL = "https://dr-python-mvm9.onrender.com/student/register?page=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const AddStudentsAPI = async (data, setError, setLoading, setAllStudents, clearAll, currentPage, setTotalpage) => {
     setLoading(true)

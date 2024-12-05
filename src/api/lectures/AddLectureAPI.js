@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/lecture/add/";
+const URL = "https://dr-python-mvm9.onrender.com/lecture/add/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const AddLectureAPI = async (data, setError, setLoading, setAllLectures, subjectId) => {
     setLoading(true)

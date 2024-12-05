@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/coordinator/get";
+const URL = "https://dr-python-mvm9.onrender.com/coordinator/get";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const GetCoordinatorsAPI = async (setError, setGetLoading, setAllCoordinators) => {
     setGetLoading(true)

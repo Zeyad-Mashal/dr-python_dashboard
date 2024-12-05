@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/coordinator/update/";
+const URL = "https://dr-python-mvm9.onrender.com/coordinator/update/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const updateCoordinatorAPI = async (data, setError, setLoading, setAllCoordinators, coordinatorId, currentPage) => {
     setLoading(true)

@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/watchTracking/remove/";
+const URL = "https://dr-python-mvm9.onrender.com/watchTracking/remove/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const removeLink = async (data, setError, setLoading, studentId, lectureId, setDetails, setMaxViwes) => {
     setLoading(true)

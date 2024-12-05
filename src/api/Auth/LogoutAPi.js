@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/user/logout";
+const URL = "https://dr-python-mvm9.onrender.com/user/logout";
 const LogoutAPi = async (data, setError) => {
     try {
         const response = await fetch(URL, {

@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/student/delete/";
+const URL = "https://dr-python-mvm9.onrender.com/student/delete/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const DeleteStudentAPI = async (setError, setLoading, setAllStudents, studentId, setTotalpage, currentPage) => {
     setLoading(true)

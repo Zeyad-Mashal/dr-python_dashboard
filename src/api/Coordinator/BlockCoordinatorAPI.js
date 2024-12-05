@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/coordinator/block/";
+const URL = "https://dr-python-mvm9.onrender.com/coordinator/block/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const BlockCoordinatorAPI = async (setError, setLoading, setAllCoordinators, coordinatorId, currentPage) => {
     setLoading(true)

@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/subject/update/";
+const URL = "https://dr-python-mvm9.onrender.com/subject/update/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const UpdateSubjectAPI = async (data, setError, setLoading, setAllSubjects, subjectId) => {
     setLoading(true)

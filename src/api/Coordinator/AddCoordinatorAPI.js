@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/coordinator/add?page=";
+const URL = "https://dr-python-mvm9.onrender.com/coordinator/add?page=";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const AddCoordinatorAPI = async (data, setError, setLoading, setAllCoordinators, clearAll, currentPage, setTotalpage) => {
     setLoading(true)

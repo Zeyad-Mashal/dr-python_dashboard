@@ -1,4 +1,4 @@
-const URL = "https://back.dr-python.center/student/block/";
+const URL = "https://dr-python-mvm9.onrender.com/student/block/";
 const USER_TOKEN = localStorage.getItem("USER_TOKEN")
 const BlockStudentAPI = async (setError, setLoading, setAllStudents, studentId, currentPage) => {
     setLoading(true)
