@@ -317,8 +317,7 @@ const Students = () => {
     GetCoordinatorsAPI(setError, setGetLoading, setAllCoordinators);
   };
   const generatePassword = () => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$&";
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789@#$";
     let newPassword = "";
     for (let i = 0; i < 5; i++) {
       newPassword += characters.charAt(
