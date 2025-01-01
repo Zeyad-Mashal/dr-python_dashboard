@@ -52,6 +52,7 @@ const Students = () => {
   const [coordinatorName, setCoordinatorName] = useState("");
   const [coordinatorId, setCoordinatorId] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [copySuccess, setCopySuccess] = useState("");
 
   const validateEmail = (value) => {
     // Regex pattern to validate email
@@ -116,7 +117,7 @@ const Students = () => {
     } else {
       const data = {
         name: userName,
-        email,
+        email: email.toLowerCase(),
         password,
         phone,
         subjects: subjectsId,
