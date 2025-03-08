@@ -37,7 +37,6 @@ const Students = () => {
   const [allSubjects, setAllSubjects] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [totalPage, setTotalpage] = useState();
@@ -51,26 +50,7 @@ const Students = () => {
   const [getLoading, setGetLoading] = useState(false);
   const [coordinatorName, setCoordinatorName] = useState("");
   const [coordinatorId, setCoordinatorId] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [copySuccess, setCopySuccess] = useState("");
 
-  const validateEmail = (value) => {
-    // Regex pattern to validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (value.includes(" ")) {
-      return "Email should not contain spaces.";
-    } else if (!emailRegex.test(value)) {
-      return "Please enter a valid email address.";
-    }
-    return "";
-  };
-
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    const error = validateEmail(value);
-    setEmail(value);
-    setEmailError(error);
-  };
   const handleAddSubject = () => {
     const subjectId = allSubjects.filter((e) => e.name === selectedSubject)[0]
       ._id;
@@ -112,12 +92,11 @@ const Students = () => {
     GetSubjectAPI(setError, setLoading, setAllSubjects);
   };
   const addStudentAPI = () => {
-    if (userName === "" || email === "" || password === "" || phone === "") {
+    if (userName === "" || password === "" || phone === "") {
       setError("Please Full All Inputs");
     } else {
       const data = {
         name: userName,
-        email: email.toLowerCase(),
         password,
         phone,
         subjects: subjectsId,
@@ -145,12 +124,11 @@ const Students = () => {
     );
   };
   const updateStudent = () => {
-    if (userName === "" || email === "" || password === "" || phone === "") {
+    if (userName === "" || password === "" || phone === "") {
       setError("Please Full All Inputs");
     } else {
       const data = {
         name: userName,
-        email,
         password,
         phone,
         subjects: subjectsId,
@@ -199,7 +177,6 @@ const Students = () => {
   const clearAll = () => {
     setSubjectsId([]);
     setUserName("");
-    setEmail("");
     setPassword("");
     setPhone("");
     setSelectedSubject("");
@@ -229,7 +206,6 @@ const Students = () => {
   const openUpdate = (
     userName,
     phone,
-    email,
     password,
     subjects,
     studentId,
@@ -244,7 +220,6 @@ const Students = () => {
 
     setUserName(userName);
     setPhone(phone);
-    setEmail(email);
     setPassword(password);
     setSubjects(subjectsName);
     setSubjectsId(subjectsIdArray);
@@ -304,7 +279,6 @@ const Students = () => {
   const openAddStudent = () => {
     setSubjectsId([]);
     setUserName("");
-    setEmail("");
     setPassword("");
     setPhone("");
     setSelectedSubject("");
@@ -433,13 +407,7 @@ const Students = () => {
             <div className="inputs_bottom">
               <input
                 type="text"
-                placeholder="Email"
-                value={email}
-                onChange={handleEmailChange}
-              />
-              <input
-                type="text"
-                placeholder="Password"
+                placeholder="Code"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -477,7 +445,6 @@ const Students = () => {
               ))}
             </div>
           </div>
-          {emailError && <p style={{ color: "red" }}>{emailError}</p>}
 
           {error}
           <button onClick={addStudentAPI}>
@@ -506,13 +473,7 @@ const Students = () => {
             <div className="inputs_bottom">
               <input
                 type="text"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Password"
+                placeholder="Code"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -568,8 +529,7 @@ const Students = () => {
                 <tr>
                   <th>Username</th>
                   <th>Phone Number</th>
-                  <th>Email</th>
-                  <th>Password</th>
+                  <th>Code</th>
                   <th>Actions</th>
                   <th>Statistics</th>
                 </tr>
@@ -578,7 +538,6 @@ const Students = () => {
                     <tr>
                       <td>{item.name}</td>
                       <td>{item.phone}</td>
-                      <td>{item.email}</td>
                       <td>{item.password}</td>
                       <td className="student_info">
                         <FontAwesomeIcon
@@ -587,7 +546,6 @@ const Students = () => {
                             openUpdate(
                               item.name,
                               item.phone,
-                              item.email,
                               item.password,
                               item.subjects,
                               item._id,
